@@ -41,7 +41,7 @@
                 </div>
 
                 <div class="mt-3">
-                   <a href="#" class="text-blue-500 underline">利用規約・プライバシーポリシー</a>
+                   <a href="{{route('privacy-policy')}}" class="text-blue-500 underline">利用規約・プライバシーポリシー</a>
                 </div>
 
             </form>

@@ -5,13 +5,22 @@
             <form method="POST" action="{{ route('user.login.store') }}">
                 @csrf
                 <div>
-                    <input id="email" class="block mt-1 w-full rounded" type="email" name="email" placeholder="メールアドレス" />
+                    <input id="email" class="@error('email') border-red-500 @enderror block mt-1 w-full rounded" type="email" name="email" placeholder="メールアドレス" />
+                    @error('email')
+                    <div class="text-red-500">{{ $message }}</div>
+                @enderror
                 </div>
                 <div class="mt-3">
-                    <input id="password" class="block mt-1 w-full rounded" type="password" name="password" placeholder="パスワード" />
+                    <input id="password" class="@error('password') border-red-500 @enderror block mt-1 w-full rounded" type="password" name="password" placeholder="パスワード" />
+                    @error('password')
+                        <div class="text-red-500">{{ $message }}</div>
+                     @enderror
                 </div>
                 <div class="mt-3">
-                   <button type="submit" class="bg-indigo-900 rounded p-2 text-white mt-1 w-full">Login</button>
+                    <button type="submit" class="bg-indigo-900 rounded p-2 text-white mt-1 w-full">Login</button>
+                </div>
+                <div class="mt-3">
+                    <a href="{{route('user.forgot.password')}}" class="text-center text-blue-500 underline">パスワードを再設定する</a>
                 </div>
 
             </form>

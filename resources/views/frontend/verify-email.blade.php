@@ -9,7 +9,7 @@
             <form method="POST" action="{{ route('verification.send') }}">
                 @csrf
                 <div class="text-center">
-                    <a class="text-blue-500 text-center font-bold underline">メールを再送信</a>
+                    <button type="submit" class="text-blue-500 text-center font-bold underline">メールを再送信</Button>
                 </div>
             </form>
             <div>

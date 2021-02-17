@@ -30,6 +30,10 @@ Route::group(['prefix' =>'user', 'middleware' => ['guest']], function () {
     Route::get('/preview-register', [RegisterController::class, 'registerPreview'])->name('preview.register');
     Route::post('/user-register', [RegisterController::class, 'store'])->name('user.register');
 
+    Route::view('/forgot-password','frontend.forgot-password')->name('user.forgot.password');
+    Route::view('/password-reset','frontend.password-reset-done')->name('user.password.reset');
+    Route::view('/privacy-policy','frontend.terms-privacy-policy')->name('privacy-policy');
+
 });
 
 Route::group(['prefix' =>'user', 'middleware' => ['auth','verified']], function () {
@@ -39,6 +43,15 @@ Route::group(['prefix' =>'user', 'middleware' => ['auth','verified']], function 
 });
 
 
+// Route::group(['prefix' =>'user'], function () {
+//     Route::view('/login', 'frontend.login')->name('user.login');
+//     Route::view('/register', 'frontend.register')->name('register.form');
+//     Route::get('/register/getStore', [RegisteredUserController::class, 'registerGet'])->name('register.storeGet');
+//     Route::get('/preview-register', [RegisteredUserController::class, 'registerPreview'])->name('preview.register');
+//     Route::post('/user-register', [RegisteredUserController::class, 'userStore'])->name('user.register');
+//     Route::view('/verify-email', 'frontend.verify-email')->name('verify.email');
+
+// });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
