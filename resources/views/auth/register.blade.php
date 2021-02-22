@@ -1,59 +1,63 @@
 <x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+            <h1 class="text-center text-xl font-extrabold">Register</h1>
+            <form action="{{ route('register.next') }}" method="POST">
+                @csrf
+                <div>
+                    <label for="Nickname">ニックネームを教えてください。</label>
+                    <input id="Nickname" class="@error('name') border-red-500 @enderror block mt-1 w-full rounded-full" type="text" name="name" value="{{old('name')}}" placeholder="ニックネーム" />
+                    @error('name')
+                        <div class="text-red-500">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="mt-3">
+                    <label for="email">メールアドレスを教えてください。</label>
+                    <input id="email" class="@error('email') border-red-500 @enderror block mt-1 w-full rounded-full" type="email" name="email" value="{{old('email')}}" placeholder="メールアドレス" />
+                    @error('email')
+                        <div class="text-red-500">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="mt-3">
+                    <label for="password">パスワードを設定してください。</label>
+                    <input id="password" class="@error('password') border-red-500 @enderror block mt-1 w-full rounded-full" type="password" name="password" placeholder="パスワード" />
+                    @error('password')
+                        <div class="text-red-500">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="mt-3">
+                    <label for="password_confirmation">パスワードを設定してください。</label>
+                    <input id="password_confirmation" class="@error('password_confirmation') border-red-500 @enderror block mt-1 w-full rounded-full" type="password" name="password_confirmation" placeholder="パスワード（確認）" />
+                    @error('password_confirmation')
+                        <div class="text-red-500">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="mt-3">
+                    <input id="checkboxAgree" class="appearance-none checked:bg-blue-600 checked:border-transparen" type="checkbox" value="false"/>
+                    <label for="checkbox" class="text-sm">利用規約・プライバシーポリシーに同意する。</label>
+                </div>
+                <div class="mt-3">
+                   <button id="registerNext" type="submit" disabled class="bg-gray-300 text-black disabled:opacity-50 rounded-full p-2 mt-1 w-full">次へ</button>
+                </div>
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+                <div class="mt-3 text-center my-5">
+                   <a href="{{route('privacy-policy')}}" class="text-blue-500 underline ">利用規約・プライバシーポリシー</a>
+                </div>
 
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
+            </form>
+        </div>
+    </div>
+    @push('js')
+    <script>
+        $(document).on('change','#checkboxAgree', function(){
+            $(this).val(this.checked ? "true" : "false");
 
-            <!-- Name -->
-            <div>
-                <x-label for="name" :value="__('Name')" />
-
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
-            </div>
-
-            <!-- Email Address -->
-            <div class="mt-4">
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-            </div>
-
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
-
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="new-password" />
-            </div>
-
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
-
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
-
-                <x-button class="ml-4">
-                    {{ __('Register') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
+            if ( $(this).val() == 'false') {
+                $('#registerNext').attr('disabled', 'disabled')
+            }else{
+                $('#registerNext').removeAttr("disabled");
+            }
+        });
+    </script>
+    @endpush
 </x-guest-layout>

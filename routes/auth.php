@@ -14,8 +14,20 @@ Route::get('/register', [RegisteredUserController::class, 'create'])
                 ->middleware('guest')
                 ->name('register');
 
+//This route added custom
+Route::post('/register-next', [RegisteredUserController::class, 'registerNext'])
+                ->middleware('guest')->name('register.next');
+
+//This route added custom
+Route::get('/preview-register', [RegisteredUserController::class, 'registerPreview'])
+                ->middleware('guest')->name('preview.register');;
+
 Route::post('/register', [RegisteredUserController::class, 'store'])
                 ->middleware('guest');
+//This route added custom
+Route::get('/register-success', [RegisteredUserController::class, 'register_success'])
+                ->middleware('guest', 'verified')
+                ->name('register.success');
 
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])
                 ->middleware('guest')
@@ -31,6 +43,10 @@ Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])
 Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
                 ->middleware('guest')
                 ->name('password.email');
+//This route added custom
+Route::get('/forgot-password-success', [PasswordResetLinkController::class, 'password_success'])
+                ->middleware('guest')
+                ->name('password.request.success');
 
 Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])
                 ->middleware('guest')
@@ -39,6 +55,10 @@ Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])
 Route::post('/reset-password', [NewPasswordController::class, 'store'])
                 ->middleware('guest')
                 ->name('password.update');
+//This route added custom
+Route::get('/reset-password-success', [NewPasswordController::class, 'reset_success'])
+                ->middleware('guest')
+                ->name('password.reset.success');
 
 Route::get('/verify-email', [EmailVerificationPromptController::class, '__invoke'])
                 ->middleware('auth')

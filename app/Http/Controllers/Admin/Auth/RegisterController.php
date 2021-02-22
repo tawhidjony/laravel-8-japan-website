@@ -33,6 +33,7 @@ class RegisterController extends Controller
             'name' => $userData['name'],
             'email' => $userData['email'],
             'password' => Hash::make($userData['password']),
+            'osh_code' => 'OSH'.rand(10000, 99999),
         ]));
         event(new Registered($user));
         return redirect(RouteServiceProvider::HOME);

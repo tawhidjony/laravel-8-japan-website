@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Str;
 use function GuzzleHttp\Promise\all;
 
 class RegisteredUserController extends Controller
@@ -25,6 +25,7 @@ class RegisteredUserController extends Controller
         return view('auth.register');
     }
 
+
     /**
      * Handle an incoming registration request.
      *
@@ -33,10 +34,10 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function registerGet(Request $request){
+    public function registerNext(Request $request){
 
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|confirmed|min:8',
         ]);
@@ -45,43 +46,36 @@ class RegisteredUserController extends Controller
         $request->session()->put(['user' => $user]);
         return redirect()->route('preview.register');
     }
+
     public function registerPreview(Request $request){
-
         $userData = $request->session()->get('user');
-        return view('frontend.preview-register', compact('userData'));
+        if(!$userData){
+            return redirect()->back();
+        }
+        return view('auth.register-preview', compact('userData'));
     }
-
-    // public function userStore(Request $request){
-
-    //     $userData = $request->session()->get('user');
-
-    //     $user = User::create([
-    //         'name' => $userData['name'],
-    //         'email' => $userData['email'],
-    //         'password' => Hash::make($userData['password']),
-    //     ]);
-
-    //     if($user){
-    //         return redirect()->route('verify.email');
-    //     }
-    // }
 
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'name' => 'required|string|max:255',
-        //     'email' => 'required|string|email|max:255|unique:users',
-        //     'password' => 'required|string|confirmed|min:8',
-        // ]);
+
         $userData = $request->session()->get('user');
+
         Auth::login($user = User::create([
             'name' => $userData['name'],
             'email' => $userData['email'],
             'password' => Hash::make($userData['password']),
+            'osh_code' => 'OSH'.rand(10000, 99999),
         ]));
 
-        event(new Registered($user));
+        if($user){
+            $request->session()->forget('user');
+            event(new Registered($user));
+            return redirect(RouteServiceProvider::HOME);
+        }
 
-        return redirect(RouteServiceProvider::HOME);
+    }
+    public function register_success()
+    {
+        return view('auth.registration-success');
     }
 }

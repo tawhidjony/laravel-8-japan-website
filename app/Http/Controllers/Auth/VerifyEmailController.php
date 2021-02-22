@@ -21,20 +21,15 @@ class VerifyEmailController extends Controller
     {
 
         if ($request->user()->hasVerifiedEmail()) {
+            return redirect()->route('register.success');
             // return redirect()->intended(RouteServiceProvider::HOME.'?verified=1');
-            $code['osh_code'] = 'OSH'.'-'.rand(1000000,000000);
-            $user = User::find($request->id);
-            return $user->update($code);
-            return redirect()->route('register.done');
         }
 
         if ($request->user()->markEmailAsVerified()) {
             event(new Verified($request->user()));
         }
+        return redirect()->route('register.success');
 
-
-
-        // return redirect()->intended(RouteServiceProvider::HOME.'?verified=1');
-        return redirect()->route('register.done');
+        //return redirect()->intended(RouteServiceProvider::HOME.'?verified=1');
     }
 }

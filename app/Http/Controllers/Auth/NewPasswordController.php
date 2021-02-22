@@ -20,6 +20,10 @@ class NewPasswordController extends Controller
     {
         return view('auth.reset-password', ['request' => $request]);
     }
+    public function reset_success()
+    {
+        return view('auth.reset-password-success');
+    }
 
     /**
      * Handle an incoming new password request.
@@ -35,6 +39,9 @@ class NewPasswordController extends Controller
             'token' => 'required',
             'email' => 'required|email',
             'password' => 'required|string|confirmed|min:8',
+        ],
+        [
+            'required.password' => '半角英数8文字以上で設定してください。'
         ]);
 
         // Here we will attempt to reset the user's password. If it is successful we
@@ -56,7 +63,7 @@ class NewPasswordController extends Controller
         // the application's home authenticated view. If there is an error we can
         // redirect them back to where they came from with their error message.
         return $status == Password::PASSWORD_RESET
-                    ? redirect()->route('user.password.reset')->with('status', __($status))
+                    ? redirect()->route('password.reset.success')->with('status', __($status))
                     : back()->withInput($request->only('email'))
                             ->withErrors(['email' => __($status)]);
     }

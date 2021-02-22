@@ -6,7 +6,7 @@
                 ログイン画面よりログインしてください。</p>
 
                 <div class="mt-6">
-                    <a href="{{route('user.login')}}" class="bg-gray-200 rounded-full p-3 text-center text-black block">ログイン画面へ</a>
+                    <a href="{{route('login')}}" class="bg-gray-200 rounded-full p-3 text-center text-black block">ログイン画面へ</a>
                 </div>
         </div>
     </div>

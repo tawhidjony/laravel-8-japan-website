@@ -1,13 +1,9 @@
 <x-guest-layout>
     <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
 
         <div class="mb-4 text-sm text-gray-600">
-            {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+           <h2 class="text-center font-extrabold mt-5 mb-3">パスワードをお忘れの方へ</h2>
+           <p>パスワードをお忘れの方はメールアドレスを入力してください。再設定用のメールをお送りいたします。</p>
         </div>
 
         <!-- Session Status -->
@@ -21,15 +17,14 @@
 
             <!-- Email Address -->
             <div>
-                <x-label for="email" :value="__('Email')" />
+                <div>
+                    <input id="email" class="@error('email') border-red-500 @enderror block my-10 w-full rounded-full" type="email" name="email" placeholder="メールアドレス" />
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+                </div>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <x-button>
-                    {{ __('Email Password Reset Link') }}
-                </x-button>
+            <div class="mt-3">
+                <button type="submit" class="bg-gray-300 rounded-full p-2 text-black my-10 w-full">次へ</button>
             </div>
         </form>
     </x-auth-card>

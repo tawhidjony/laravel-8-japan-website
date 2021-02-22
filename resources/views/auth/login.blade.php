@@ -1,4 +1,4 @@
-<x-guest-layout>
+{{-- <x-guest-layout>
     <x-auth-card>
 
 
@@ -49,4 +49,38 @@
             </div>
         </form>
     </x-auth-card>
+</x-guest-layout> --}}
+
+<x-guest-layout>
+    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+            <h1 class="text-center ">ログイン</h1>
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
+                <div class="mt-6">
+                    <input id="email" class="@error('email') border-red-500 @enderror rounded-full block mt-1 w-full rounded" type="email" name="email" placeholder="メールアドレス" />
+                    @error('email')
+                    <div class="text-red-500">{{ $message }}</div>
+                @enderror
+                </div>
+                <div class="mt-6">
+                    <input id="password" class="@error('password') border-red-500 @enderror rounded-full block mt-1 w-full rounded" type="password" name="password" placeholder="パスワード" />
+                    @error('password')
+                        <div class="text-red-500">{{ $message }}</div>
+                     @enderror
+                </div>
+                <div class="mt-6">
+                    <button type="submit" class="bg-gray-200 rounded-full p-3 w-full text-center text-black block">次へ</button>
+                </div>
+                <div class="mt-3 text-center">
+                    @if (Route::has('password.request'))
+                    <a class="text-center text-blue-500 underline hover:text-gray-900" href="{{ route('password.request') }}">
+                        パスワードを再設定する
+                    </a>
+                @endif
+                </div>
+
+            </form>
+        </div>
+    </div>
 </x-guest-layout>

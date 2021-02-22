@@ -17,7 +17,7 @@
                 <a href="">投稿方法や詳細はこちら</a>
             </div>
             <div class="mt-6">
-                <a href="" class="bg-gray-200 rounded-full p-3 text-center text-black block">「ハレの日セット」に申し込む</a>
+                <a href="{{route('product.index')}}" class="bg-gray-200 rounded-full p-3 text-center text-black block">「ハレの日セット」に申し込む</a>
             </div>
             <div class="mt-6">
                 <a href="" class="bg-gray-200 rounded-full p-3 text-center text-black block">お赤飯友の会について</a>
@@ -31,7 +31,6 @@
 
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-
                 <a href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
                     Logout
                 </a>

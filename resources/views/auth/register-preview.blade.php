@@ -23,7 +23,6 @@
                    <button type="submit" class="bg-indigo-900 rounded p-2 text-white mt-1 w-full">Register</button>
                 </div>
             </form>
-
         </div>
     </div>
 </x-guest-layout>
